@@ -79,6 +79,24 @@
   rerun against that commit. Do not call the pre-commit table the final release
   result before C4.
 
+## C4: final committed-checkout Churn evidence
+
+- Commit used by the run: `0f61be3ba7404d54bcde79ab5c92d87601426fd2`.
+- Command: `python -m tabpack.cli run --data-dir data/churn --device cuda --output runs/churn-reduced-committed`.
+- Report: `reports/churn-reduced-committed/report.md`, `per_seed.csv`, and
+  `summary.json`; all nine runs completed and report-side checkpoint/hash
+  validation passed.
+- Final committed-checkout test ROC-AUC mean ± sample SD: ordinary MLP
+  **0.855414 ± 0.002412**, homogeneous independent ensemble
+  **0.856576 ± 0.000944**, packed heterogeneous ensemble
+  **0.858825 ± 0.002562**. Test log-loss: **0.345809 ± 0.003415**,
+  **0.344509 ± 0.001083**, and **0.343488 ± 0.004115**, respectively.
+- Mean synchronized fit wall time was 9.6310 s, 50.2010 s, and 60.9600 s;
+  these include construction plus training/validation/selection under the
+  corrected boundary and remain complete workflow timings, not a packing-only
+  speed claim. The packed result's seed-2 selection used two snapshots because
+  additional candidates did not strictly improve validation AUC.
+
 ### Review decisions
 
 - T3/T23's paper-faithful greedy singleton rule supersedes T16's proposed empty

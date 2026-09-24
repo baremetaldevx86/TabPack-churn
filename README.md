@@ -15,14 +15,14 @@ scores or an equal-capacity/equal-compute comparison. The official Churn metric
 is **accuracy**; local checkpoint and ensemble selection use **ROC-AUC**.
 
 **Measured result (RTX 5050 Laptop, CUDA 12.8 wheel, three seeds):** the packed
-heterogeneous workflow reached test ROC-AUC **0.858702 ± 0.002105**, compared
+heterogeneous workflow reached test ROC-AUC **0.858825 ± 0.002562**, compared
 with **0.856576 ± 0.000944** for the homogeneous independent ensemble and
-**0.855624 ± 0.001718** for the ordinary MLP. Test log-loss was
-**0.343824 ± 0.004010**, **0.344509 ± 0.001083**, and **0.346776 ± 0.002816**,
+**0.855414 ± 0.002412** for the ordinary MLP. Test log-loss was
+**0.343488 ± 0.004115**, **0.344509 ± 0.001083**, and **0.345809 ± 0.003415**,
 respectively. These are descriptive reduced-protocol results, not a claim of
 paper equivalence. The complete per-seed table is in
-[`reports/churn-reduced/report.md`](reports/churn-reduced/report.md) and
-[`reports/churn-reduced/per_seed.csv`](reports/churn-reduced/per_seed.csv).
+[`reports/churn-reduced-committed/report.md`](reports/churn-reduced-committed/report.md) and
+[`reports/churn-reduced-committed/per_seed.csv`](reports/churn-reduced-committed/per_seed.csv).
 See [integration history](docs/checkpoints.md) for checks actually completed.
 
 > **Implementation status:** `core`, `data`, `models`, `optim`, `experiment`, and
