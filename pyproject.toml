@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tabpack-churn"
+version = "0.1.0"
+description = "Independent reduced Churn comparison inspired by TabPack"
+requires-python = ">=3.12,<3.13"
+dependencies = ["numpy==2.2.6", "scipy==1.15.3", "scikit-learn==1.6.1", "torch==2.11.0"]
+
+[project.scripts]
+tabpack-churn = "tabpack.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["tabpack*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["gpu: optional CUDA correctness checks", "data: canonical Churn integration"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

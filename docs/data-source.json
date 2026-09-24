@@ -1,0 +1,79 @@
+{
+  "schema_version": "churn-source-lock/v1",
+  "dataset_id": "churn",
+  "origin": "official_tabpack_archive",
+  "reference_code": {
+    "repository": "https://github.com/yandex-research/tabpack",
+    "revision": "05a89e21b955f12de84889d662e15ca534019aaa"
+  },
+  "archive": {
+    "url": "https://huggingface.co/datasets/Yura52/tabpack-data/resolve/dfb85cb493bfb7493de0b8c0bd9e2f9e6a56baa1/tabpack-data.tar.gz",
+    "revision": "dfb85cb493bfb7493de0b8c0bd9e2f9e6a56baa1",
+    "format": "tar.gz",
+    "size_bytes": 189856645,
+    "sha256": "89338c628fed24af03084c9348ca0a5c8ca4f12f8b988a576d9d1711cc661558",
+    "digest_authority": "Hugging Face dataset tree API, LFS oid",
+    "metadata_url": "https://huggingface.co/api/datasets/Yura52/tabpack-data/tree/dfb85cb493bfb7493de0b8c0bd9e2f9e6a56baa1?recursive=true&expand=false",
+    "observed_head_redirect_host": "us.aws.cdn.hf.co",
+    "allowed_delivery_hosts": ["huggingface.co", "cdn-lfs.huggingface.co", "cdn-lfs.hf.co", "cdn-lfs-us-1.hf.co", "cdn-lfs-eu-1.hf.co", "cas-bridge.xethub.hf.co", "us.aws.cdn.hf.co"],
+    "locally_downloaded_by_T52": false,
+    "verification_policy": "Verify the complete archive size and SHA-256 before parsing a private captured snapshot. No prefix, range, alternate revision, or mirror is accepted."
+  },
+  "allowed_members": [
+    "data/churn/info.json",
+    "data/churn/x_num.npy",
+    "data/churn/x_cat.npy",
+    "data/churn/x_bin.npy",
+    "data/churn/y.npy",
+    "data/churn/splits/default/train.npy",
+    "data/churn/splits/default/val.npy",
+    "data/churn/splits/default/test.npy"
+  ],
+  "member_policy": {
+    "required": ["info.json", "y.npy", "splits/default/train.npy", "splits/default/val.npy", "splits/default/test.npy"],
+    "feature_blocks": "One or more of x_num.npy, x_cat.npy, x_bin.npy must be present. The exact present set is taken only from the fully hash-verified archive, and the local inventory must match it exactly.",
+    "hash_authority": "Member sizes and SHA-256 digests are derived from the verified immutable archive on every offline load, rather than trusting an editable acquisition receipt.",
+    "inventory_status": "Verified locally on 2026-09-25 from the complete pinned archive. The Churn members are info.json (79 bytes), x_num.npy (10000x7 float32), x_bin.npy (10000x3 float32), x_cat.npy (10000x1 Unicode), y.npy (10000 int64), and int32 train/val/test split arrays with 6400/1600/2000 rows. Exact extracted-member byte digests are recorded in the local run manifest and are derived from the verified archive by the loader.",
+    "other_datasets": "Payloads from other datasets are scanned under resource limits and discarded; only allowlisted Churn payloads are published.",
+    "manual_placement": "Requires the same canonical archive retained locally and exact member equality; an extracted directory alone is insufficient."
+  },
+  "expected_counts": {"train": 6400, "val": 1600, "test": 2000},
+  "split_policy": "Preserve all source index values and their order. Require int32, unique, nonempty, pairwise-disjoint indices with complete 10000-row coverage. No regeneration or resplitting.",
+  "target": {
+    "dtype": "int64",
+    "values": [0, 1],
+    "positive_class": 1,
+    "positive_class_semantic_meaning": "Unconfirmed by T52; retain source binary encoding without remapping.",
+    "both_classes_required_in_each_split": true,
+    "reduced_evaluation_metric": "roc-auc"
+  },
+  "preprocessing": {
+    "schema_version": "preprocess-state/v1",
+    "fit_split": "train",
+    "numeric": "Finite values or NaN; train median imputation followed by QuantileTransformer(output_distribution='normal', n_quantiles=min(1000,n_train), subsample=n_train, random_state=0). No injected noise.",
+    "categorical": "Train most-frequent imputation, ascending typed value tie-breaking, then dense float32 OneHotEncoder(handle_unknown='ignore', drop=None). Missing means None or floating NaN; empty strings and literal 'nan' remain categories.",
+    "binary": "Explicit x_bin columns must contain 0/1/NaN and join categorical preprocessing. No all-split binary discovery in x_num.",
+    "all_missing_train_columns": "Fail closed; never impute from holdouts or silently drop columns.",
+    "output": "Contiguous finite float32; original numeric block then categorical one-hot blocks; retained row IDs remain outside model features.",
+    "identity": "Learned-state SHA-256 covers medians, complete quantile/reference arrays, modes, vocabulary, category block offsets, feature names, effective configuration, and dependency versions. It excludes held-out features, labels, and dataset identity."
+  },
+  "security_limits": {
+    "max_archive_members": 20000,
+    "max_member_name_bytes": 512,
+    "max_regular_member_bytes": 536870912,
+    "max_extended_header_bytes": 65536,
+    "max_decompressed_stream_bytes": 2147483648,
+    "max_compression_ratio": 200,
+    "max_churn_payload_bytes": 67108864,
+    "max_parse_seconds": 120,
+    "nested_archives": 0,
+    "links_and_special_files": "rejected",
+    "path_policy": "Reject traversal, absolute paths, Windows drives/devices/reparse points, alternate separators and streams, trailing dot/space aliases, control characters, duplicate/case-colliding names, and file-directory collisions."
+  },
+  "synthetic_test_seam": {
+    "function": "tabpack.data.make_synthetic_fixture",
+    "dataset_id": "synthetic_smoke_v1",
+    "counts": {"train": 32, "val": 12, "test": 12},
+    "production_fallback": false
+  }
+}
