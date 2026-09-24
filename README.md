@@ -146,6 +146,16 @@ if ($LASTEXITCODE -ne 0) { throw 'Experiment did not complete; inspect the run a
 if ($LASTEXITCODE -ne 0) { throw 'Report generation failed.' }
 ```
 
+The same report step is available as a standalone script. It writes one JSON
+summary, one per-seed CSV, and one Markdown report without training or data
+acquisition:
+
+```powershell
+& $Python scripts/report_results.py `
+  --run-dir runs/churn-reduced-committed `
+  --output reports/churn-reduced-committed
+```
+
 Use a fresh output path for a new attempt. There is **no exact training-resume
 interface**; a final inference checkpoint is not an interrupted-training state.
 `report` reads saved results rather than training again. Inspect every seed and
