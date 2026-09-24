@@ -24,6 +24,7 @@ import numpy as np
 import torch
 from torch import Tensor, nn
 
+from .baselines import SimpleMLP
 from .core import (
     Candidate,
     ReducedConfig,
@@ -178,10 +179,10 @@ def _single_metrics(y: np.ndarray, probabilities: np.ndarray) -> dict[str, float
 
 def _new_ordinary(spec: Any, input_dim: int, seed: int, device: torch.device) -> OrdinaryMLP:
     _seed_everything(seed)
-    return OrdinaryMLP(
+    return SimpleMLP(
         input_dim,
         depth=spec.depth,
-        width=spec.width,
+        hidden_dim=spec.width,
         dropout=spec.dropout,
         device=device,
         dtype=torch.float32,

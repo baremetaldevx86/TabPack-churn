@@ -122,6 +122,30 @@ learning-rate schedule, mixed precision, or external tuning.
 
 ## 4. Models and optimization
 
+### Reusable `SimpleMLP` baseline
+
+`tabpack.baselines.SimpleMLP` is the public baseline API used by the ordinary
+MLP path. It defaults to two hidden blocks, width 64, dropout 0.1, and one
+binary logit, while allowing callers to override `hidden_dim`, `depth`,
+`dropout`, and `output_dim` without knowing the experiment runner internals:
+
+```python
+import torch
+from tabpack import SimpleMLP
+
+model = SimpleMLP(input_dim=16, hidden_dim=64, depth=2, dropout=0.1)
+logits = model(torch.randn(32, 16))
+loss = torch.nn.functional.binary_cross_entropy_with_logits(
+    logits, torch.zeros(32)
+)
+```
+
+The model returns logits rather than probabilities. This keeps training stable
+with `binary_cross_entropy_with_logits` and lets downstream callers choose
+probability conversion and metrics explicitly. `SimpleMLP` subclasses the
+validated `OrdinaryMLP`, so it remains compatible with `make_optimizer` and
+weights-only state-dict checkpoints.
+
 ### Ordinary MLP
 
 One fixed baseline network with hidden `Linear -> ReLU -> Dropout` blocks and

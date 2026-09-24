@@ -203,6 +203,7 @@ for loss reduction, independent RNG streams, selection, metrics, and limitations
 | [`tabpack/core.py`](tabpack/core.py) | Immutable configuration/member records, named seed derivation and sampling, tie-aware ROC-AUC, log loss, probability averaging, greedy selection, and descriptive aggregation. Standard-library only. |
 | [`tabpack/data.py`](tabpack/data.py) | Pinned acquisition, bounded Churn-only extraction, offline byte/schema/split validation, train-only preprocessing and its fingerprint, explicit synthetic fixture. |
 | [`tabpack/models.py`](tabpack/models.py) | Ordinary MLP and heterogeneous member-first packed MLP, width/depth masks, member snapshots, logical/stored parameter counts, sample-mean/member-sum BCE loss. |
+| [`tabpack/baselines.py`](tabpack/baselines.py) | Public reusable `SimpleMLP` baseline with configurable hidden width/depth/dropout and logits-first output. |
 | [`tabpack/optim.py`](tabpack/optim.py) | Member-separable packed AdamW; optimizer factory applies structural masks and zero bias decay. Ordinary models use stock PyTorch AdamW. |
 | [`tabpack/experiment.py`](tabpack/experiment.py) | Three-method training, early stopping, frozen snapshot/test evaluation, timing, local inference artifacts, and report orchestration. |
 | [`tabpack/cli.py`](tabpack/cli.py) | `preflight`, `fetch-data`, `dry-run`, `smoke`, `run`, and `report` command boundary. |
